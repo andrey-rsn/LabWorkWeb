@@ -19,6 +19,7 @@ module.exports= class LoginModel{
             login:this.login,
             password:this.password
         }
+        
 
         var client = new  XMLHttpRequest();
 
