@@ -14,11 +14,9 @@ userRouter.get("/login",AuthController.getLoginPage);
 app.use("/", userRouter);
  
 // общие обработчики
-app.get("/about", function (request, response) {
-    response.send("О сайте");
-});
+
 app.get("/", function (request, response) {
-    response.send("Главная страница");
+    response.redirect('/login')
 });
  
 // обработка ошибки 404

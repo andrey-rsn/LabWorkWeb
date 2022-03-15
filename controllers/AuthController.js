@@ -3,9 +3,16 @@ const Auth = require("../models/loginModel.js");
 exports.login = function (request, response){
     var login=request.body.login;
     var password=request.body.password;
-    var authManager = new Auth(login,password);
+    var isCrypto=request.body.isCrypto;
+    var authManager = new Auth(login,password,isCrypto);
     var res=authManager.auth();
-    response.send(JSON.stringify(res));
+    if(res==200)
+    {
+        response.render("nextPage.hbs");
+    }
+    else{
+        response.render("exceptionPage.hbs");
+    }
 };
 
 exports.getLoginPage = function (request, response){

@@ -1,31 +1,32 @@
 const { cookie } = require('express/lib/response');
-var fetch = require('node-fetch');
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+const sha1=require('sha1')
 
 module.exports= class LoginModel{
-    constructor(login,password){
+    constructor(login,password,isCrypto){
         this.login=login,
         this.password=password
+        this.isCrypto=isCrypto
     }
 
     auth()
     {
+        if(this.isCrypto)
+        {
+            this.password=sha1(this.password)
+        }
         var bodyData = {
             login:this.login,
             password:this.password
         }
 
-        fetch('https://helloworldprojectt.herokuapp.com/v1/authorization',
-        {
-            method:'POST',
-            body:JSON.stringify(bodyData),
-            headers: {'Content-Type':'application/json'}
-        })
-        //.then(res => res.headers.get('Set-Cookie'))
-        .then(res=>res.status)
-        .then(json=>this.result=json)
+        var client = new  XMLHttpRequest();
+    
+    client.open("POST", 'https://helloworldprojectt.herokuapp.com/v1/authorization',false);
+    client.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    client.send(JSON.stringify(bodyData));
 
-        return('this.result');
-
-
+    console.log(client.status)
+    return(client.status);
     }
 }
