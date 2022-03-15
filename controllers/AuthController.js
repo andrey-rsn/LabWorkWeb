@@ -1,5 +1,5 @@
 const Auth = require("../models/loginModel.js");
-
+var token="";
 exports.login = function (request, response){
     var login=request.body.login;
     var password=request.body.password;
@@ -8,7 +8,9 @@ exports.login = function (request, response){
     var res=authManager.auth();
     if(res==200)
     {
+        
         response.render("nextPage.hbs");
+        authManager.get_data();
     }
     else{
         response.render("exceptionPage.hbs");

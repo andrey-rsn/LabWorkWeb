@@ -21,12 +21,31 @@ module.exports= class LoginModel{
         }
 
         var client = new  XMLHttpRequest();
-    
-    client.open("POST", 'https://helloworldprojectt.herokuapp.com/v1/authorization',false);
-    client.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    client.send(JSON.stringify(bodyData));
 
-    console.log(client.status)
-    return(client.status);
+        client.open("POST", 'https://helloworldprojectt.herokuapp.com/v1/authorization',false);
+        client.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        client.withCredentials=true;
+        client.send(JSON.stringify(bodyData));
+        this.access_token=client.getResponseHeader('access_token');
+        console.log(client.status);
+        console.log(this.access_token);
+
+        return(client.status);
+    }
+
+    get_data()
+    {
+        var client = new  XMLHttpRequest();
+
+        client.open("GET", 'https://helloworldprojectt.herokuapp.com/v1/cars',false);
+        client.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        client.setRequestHeader("access_token", this.access_token);
+        client.responseType='json';
+        //client.withCredentials=true;
+        client.send(null);
+        console.log(client.responseText);
+        console.log(client.getRequestHeader('access_token'));
+        //return(client.status);
+
     }
 }
