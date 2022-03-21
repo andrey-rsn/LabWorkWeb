@@ -46,7 +46,7 @@ module.exports= class LoginModel{
         client.send(null);
         console.log(client.responseText);
         console.log(client.getRequestHeader('access_token'));
-        //return(client.status);
+        return(client.responseText);
 
     }
 }

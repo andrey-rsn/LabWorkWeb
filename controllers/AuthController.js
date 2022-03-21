@@ -8,9 +8,8 @@ exports.login = function (request, response){
     var res1=authManager.auth();
     if(res1==200)
     {
-        
-        response.render("nextPage.hbs");
-        authManager.get_data();
+        var cars=JSON.parse(authManager.get_data());
+        response.render("nextPage.hbs",{carsList: cars}); 
     }
     else{
         response.render("exceptionPage.hbs");
